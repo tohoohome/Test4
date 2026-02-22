@@ -1,48 +1,39 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <script src="https://js.puter.com/v2/"></script>
+<head>
+  <title>Puter.js Claude 4.5 Example</title>
+  <script src="https://js.puter.com/v2/"></script>
+</head>
+<body>
 
-  
-    <title>Puter.js Free LLM API Example</title>
-  </head>
-  <body>
-    <h1>Free LLM with Puter.js</h1>
+  <h2>Ask Claude Sonnet 4.5</h2>
 
-<input type="text" placeholder="Enter text here" id="userInput">
-  <button onclick="handleClick()">Submit</button>
+  <input type="text" id="prompt" placeholder="Type your question" />
+  <button onclick="askClaude()">Ask</button>
+
+  <pre id="result"></pre>
 
   <script>
-    function handleClick() {
-      const input = document.getElementById('userInput').value;
-     // alert('You entered: ' + input);
-      // 2. Use puter.ai.chat() to call a model
-      puter.ai.chat(input, {
-        model: "claude-sonnet-4.5",
-        stream : true
-      })
-      .then(response => {
-        // 3. Print result
-        let total="";
-        for (const part of response) {
-          total += part?.text?.replaceAll("\n","\n");
-        }
-        document.getElementById("output").textContent =total;
-      })
-      .catch(error => {
-        document.getElementById("output").textContent = "Error: " + error;
-      });
+    async function askClaude() {
+      const prompt = document.getElementById("prompt").value;
+      const resultBox = document.getElementById("result");
+
+      resultBox.textContent = "Loading...";
+
+      try {
+        const response = await puter.ai.chat({
+          model: "claude-3-5-sonnet-20241022",   // Claude Sonnet 4.5
+          messages: [
+            { role: "user", content: prompt }
+          ]
+        });
+
+        resultBox.textContent = response.message.content;
+      } catch (err) {
+        resultBox.textContent = "Error: " + err.message;
+      }
     }
   </script>
 
-    
-    
-    <pre id="output"></pre>
-
-    <!-- 1. Include Puter.js (no API key needed) -->
-    
-      
-  
-  </body>
+</body>
 </html>
