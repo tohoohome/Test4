@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Puter.js CDN Example</title>
+  <!-- Puter.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/puter.js/dist/puter.min.js"></script>
+</head>
+<body>
+  <h2>Puter.js LLM Example</h2>
+
+  <input type="text" id="prompt" placeholder="Ask something..." style="width:300px; padding:0.5rem;">
+  <button onclick="ask()" style="padding:0.5rem;">Ask</button>
+
+  <pre id="output" style="margin-top:1rem; white-space:pre-wrap;"></pre>
+
+  <script>
+    async function ask() {
+      const prompt = document.getElementById("prompt").value;
+      const client = new Puter({
+        model: "gpt-3.5",
+        apiKey: "YOUR_API_KEY" // optional if using public demo
+      });
+
+      try {
+        const response = await client.generate({ prompt, max_tokens: 100 });
+        document.getElementById("output").innerText = response.text;
+      } catch (err) {
+        document.getElementById("output").innerText = "Error: " + err.message;
+      }
+    }
+  </script>
+</body>
+</html>
