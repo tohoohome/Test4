@@ -2,18 +2,23 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <script src="https://js.puter.com/v2/"></script>
+
+    <script>
     <title>Puter.js Free LLM API Example</title>
   </head>
   <body>
     <h1>Free LLM with Puter.js</h1>
-    <pre id="output"></pre>
 
-    <!-- 1. Include Puter.js (no API key needed) -->
-    <script src="https://js.puter.com/v2/"></script>
+<input type="text" placeholder="Enter text here" id="userInput">
+  <button onclick="handleClick()">Submit</button>
 
-    <script>
+  <script>
+    function handleClick() {
+      const input = document.getElementById('userInput').value;
+     // alert('You entered: ' + input);
       // 2. Use puter.ai.chat() to call a model
-      puter.ai.chat("Explain machine learning in simple terms", {
+      puter.ai.chat(input, {
         model: "gpt-5-nano"
       })
       .then(response => {
@@ -23,6 +28,16 @@
       .catch(error => {
         document.getElementById("output").textContent = "Error: " + error;
       });
+    }
+  </script>
+
+    
+    <input  type=id="input"/>
+    <pre id="output"></pre>
+
+    <!-- 1. Include Puter.js (no API key needed) -->
+    
+      
     </script>
   </body>
 </html>
