@@ -2,23 +2,43 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    <title>Puter.js Claude Sonnet 4.5 Example</title>
+    <title>Puter.js Claude Chat</title>
 </head>
 <body>
-    <h1>Chat with Claude Sonnet 4.5</h1>
-    <div id="result"></div>
 
+    <h2>Chat with Claude Sonnet 4.5</h2>
+
+    <input type="text" id="userInput" placeholder="Type your message..." style="width:300px;">
+    <button onclick="sendMessage()">Send</button>
+
+    <p><strong>Response:</strong></p>
+    <div id="output"></div>
+
+    <!-- Puter.js CDN -->
     <script src="https://js.puter.com/v2/"></script>
+
     <script>
-        puter.ai.chat("Write a short sonnet about coding in JS", {
-            model: "anthropic/claude-sonnet-4-5"
-        }).then(res => {
-            document.getElementById("result").textContent =
-                res.message.content[0].text;
-        }).catch(err => {
-            document.getElementById("result").textContent =
-                "Error: " + err;
-        });
+        async function sendMessage() {
+            const input = document.getElementById("userInput").value;
+            const output = document.getElementById("output");
+
+            if (!input) return;
+
+            output.innerText = "Thinking...";
+
+            try {
+                const response = await puter.ai.chat(input, {
+                    model: "anthropic/claude-sonnet-4-5"
+                });
+
+                const text = response.message.content[0].text;
+                output.innerText = text;
+
+            } catch (error) {
+                output.innerText = "Error: " + error;
+            }
+        }
     </script>
+
 </body>
 </html>
