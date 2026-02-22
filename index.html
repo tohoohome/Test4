@@ -74,6 +74,12 @@
       resultBox.textContent = "Loading...";
 
       try {
+        // Check if puter is loaded
+        if (typeof puter === 'undefined') {
+          resultBox.textContent = "Error: Puter.js library is not loaded. Please refresh the page.";
+          return;
+        }
+
         const response = await puter.ai.chat({
           model: "claude-sonnet-4.5",
           messages: [
