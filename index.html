@@ -1,106 +1,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Claude Sonnet 4.5 with Puter.js</title>
-  <script src="https://js.puter.com/v2/"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      max-width: 800px;
-      margin: 50px auto;
-      padding: 20px;
-      background-color: #f5f5f5;
-    }
-    .container {
-      background: white;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      font-size: 14px;
-      box-sizing: border-box;
-    }
-    button {
-      background-color: #007bff;
-      color: white;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      font-size: 14px;
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    #result {
-      background-color: #f9f9f9;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      padding: 15px;
-      margin-top: 20px;
-      min-height: 50px;
-      white-space: pre-wrap;
-      word-wrap: break-word;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <title>Puter.js Claude Sonnet 4.5 Example</title>
 </head>
 <body>
-  <div class="container">
-    <h1>Claude Sonnet 4.5</h1>
-    <p>Ask me anything!</p>
-    
-    <input type="text" id="prompt" placeholder="Type your question..." />
-    <button onclick="askClaude()">Ask Claude</button>
-    
+    <h1>Chat with Claude Sonnet 4.5</h1>
     <div id="result"></div>
-  </div>
 
-  <script>
-    async function askClaude() {
-      const prompt = document.getElementById("prompt").value;
-      const resultBox = document.getElementById("result");
-
-      if (!prompt.trim()) {
-        resultBox.textContent = "Please enter a question.";
-        return;
-      }
-
-      resultBox.textContent = "Loading...";
-
-      try {
-        // Check if puter is loaded
-        if (typeof puter === 'undefined') {
-          resultBox.textContent = "Error: Puter.js library is not loaded. Please refresh the page.";
-          return;
-        }
-
-        const response = await puter.ai.chat({
-          model: "claude-sonnet-4.5",
-          messages: [
-            { role: "user", content: prompt }
-          ]
+    <script src="https://js.puter.com/v2/"></script>
+    <script>
+        puter.ai.chat("Write a short sonnet about coding in JS", {
+            model: "anthropic/claude-sonnet-4-5"
+        }).then(res => {
+            document.getElementById("result").textContent =
+                res.message.content[0].text;
+        }).catch(err => {
+            document.getElementById("result").textContent =
+                "Error: " + err;
         });
-
-        // Handle the response - Claude returns the full message object
-        resultBox.textContent = response.message.content || response.content || JSON.stringify(response);
-      } catch (err) {
-        resultBox.textContent = "Error: " + err.message;
-        console.error("Full error:", err);
-      }
-    }
-
-    // Allow Enter key to submit
-    document.getElementById("prompt").addEventListener("keypress", function(event) {
-      if (event.key === "Enter") {
-        askClaude();
-      }
-    });
-  </script>
+    </script>
 </body>
 </html>
