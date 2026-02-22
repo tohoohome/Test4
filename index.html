@@ -19,12 +19,16 @@
      // alert('You entered: ' + input);
       // 2. Use puter.ai.chat() to call a model
       puter.ai.chat(input, {
-        model: "gemini-2.5-flash",
+        model: "claude-sonnet-4.5",
         stream : true
       })
       .then(response => {
         // 3. Print result
-        document.getElementById("output").textContent = response;
+        let total="";
+        for (const part of response) {
+          total += part?.text
+        }
+        document.getElementById("output").textContent = total;
       })
       .catch(error => {
         document.getElementById("output").textContent = "Error: " + error;
