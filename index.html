@@ -1,34 +1,28 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Puter.js CDN Example</title>
-  <!-- Puter.js CDN -->
-  <script src="https://cdn.jsdelivr.net/npm/puter.js/dist/puter.min.js"></script>
-</head>
-<body>
-  <h2>Puter.js LLM Example</h2>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Puter.js Free LLM API Example</title>
+  </head>
+  <body>
+    <h1>Free LLM with Puter.js</h1>
+    <pre id="output"></pre>
 
-  <input type="text" id="prompt" placeholder="Ask something..." style="width:300px; padding:0.5rem;">
-  <button onclick="ask()" style="padding:0.5rem;">Ask</button>
+    <!-- 1. Include Puter.js (no API key needed) -->
+    <script src="https://js.puter.com/v2/"></script>
 
-  <pre id="output" style="margin-top:1rem; white-space:pre-wrap;"></pre>
-
-  <script>
-    async function ask() {
-      const prompt = document.getElementById("prompt").value;
-      const client = new Puter({
-        model: "gpt-3.5",
-        apiKey: "YOUR_API_KEY" // optional if using public demo
+    <script>
+      // 2. Use puter.ai.chat() to call a model
+      puter.ai.chat("Explain machine learning in simple terms", {
+        model: "gpt-5-nano"
+      })
+      .then(response => {
+        // 3. Print result
+        document.getElementById("output").textContent = response;
+      })
+      .catch(error => {
+        document.getElementById("output").textContent = "Error: " + error;
       });
-
-      try {
-        const response = await client.generate({ prompt, max_tokens: 100 });
-        document.getElementById("output").innerText = response.text;
-      } catch (err) {
-        document.getElementById("output").innerText = "Error: " + err.message;
-      }
-    }
-  </script>
-</body>
+    </script>
+  </body>
 </html>
