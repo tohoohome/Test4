@@ -25,10 +25,10 @@
       .then(response => {
         // 3. Print result
         let total="";
-        for (const part of response) {
-          total += part?.text
-        }
-        document.getElementById("output").textContent = total;
+       // for (const part of response) {
+       //   total += part?.text
+       // }
+        document.getElementById("output").textContent = respose;
       })
       .catch(error => {
         document.getElementById("output").textContent = "Error: " + error;
