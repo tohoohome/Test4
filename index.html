@@ -19,7 +19,8 @@
      // alert('You entered: ' + input);
       // 2. Use puter.ai.chat() to call a model
       puter.ai.chat(input, {
-        model: "gpt-5-nano"
+        model: "gpt-5-nano",
+        stream : true
       })
       .then(response => {
         // 3. Print result
